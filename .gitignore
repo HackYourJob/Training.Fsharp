@@ -1,0 +1,8 @@
+
+bin/
+obj/
+packages/
+.paket/Paket.Restore.targets
+paket-files/
+.fake/
+

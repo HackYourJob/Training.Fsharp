@@ -1,0 +1,10 @@
+FSharp.Core
+xunit
+xunit.runner.visualstudio
+Unquote
+FsCheck.xUnit
+Microsoft.NET.Test.Sdk
+Giraffe
+Microsoft.AspNetCore
+Microsoft.AspNetCore.Hosting
+FSharp.Data
