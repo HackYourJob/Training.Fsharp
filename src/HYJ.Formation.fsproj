@@ -5,6 +5,17 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="HelloWorld.fsx" />
+    <None Include="Basic.fsx" />
+    <Compile Include="FizzBuzz.fs" />
+    <None Include="FizzBuzz.Solution.fsx" />
+    <Compile Include="TennisKata.fs" />
+    <None Include="Tennis.Kata.Solution.fsx" />
+    <Compile Include="TennisKata.Api.fs" />
+    <Compile Include="DnaKata.fs" />
+    <Compile Include="GuessingGame.fs" />
+    <None Include="GuessingGame.Solution.fsx" />
+    <None Include="Advanced.fsx" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <Import Project="..\.paket\Paket.Restore.targets" />

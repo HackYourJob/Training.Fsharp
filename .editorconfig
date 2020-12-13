@@ -12,6 +12,6 @@ trim_trailing_whitespace = true
 indent_style = space
 indent_size = 4
 
-[{*.fsproj,*.fsx,*.json,*.yml}]
+[{*.fsproj,*.json,*.yml}]
 indent_size = 2
 
