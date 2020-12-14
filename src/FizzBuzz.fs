@@ -11,6 +11,15 @@ module Tests =
 
     open Implementation
 
+    module ``run should`` =
+
     [<Fact>]
-    let ``should return number`` () =
+    let ``return number`` () =
         test <@ run 2 = "2" @>
+
+    [<Fact>]
+    [<InlineData(3)>]
+    [<InlineData(6)>]
+    [<InlineData(9)>]
+    let ``return fizz when modulo 3`` value =
+        test <@ run value = "Fizz" @>
