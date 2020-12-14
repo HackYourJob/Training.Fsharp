@@ -15,15 +15,21 @@ module Implementation =
     type OldScore = Score
     type Play = OldScore -> Player -> Score
 
+    let incrementPoint point =
+        match point with
+            | Love -> Fifteen
+            | Fifteen -> Thirty
+            | Thirty -> failwith "impossible"
+
     let play (oldScore:OldScore) (player:Player) :Score = 
         match player with
         | Player1 ->
             match oldScore with
-            | Points (Love, player2Points)  -> Points (Fifteen, player2Points)
-            | Points (Fifteen, player2Points) -> Points (Thirty, player2Points)
             | Points (Thirty, player2Points) -> Fourty (Player1, player2Points)
+            | Points (player1Points, player2Points) -> Points (incrementPoint player1Points, player2Points)
             | Fourty (Player1, _) -> Game(Player1)
-            | Fourty (Player2, _) -> Deuce
+            | Fourty (Player2, Thirty) -> Deuce
+            | Fourty (Player2, player1Points) -> Fourty (Player2, incrementPoint player1Points)
             | Deuce -> Advantage(Player1)
             | Advantage(Player1) -> Game(Player1)
             | Advantage(Player2) -> Deuce
@@ -71,3 +77,7 @@ module Tests =
     [<Fact>]
     let ``should return Deuce when Player1 win and previous score Thirty Fourty``() =
        test <@ play (Fourty(Player2,Thirty)) Player1 = Deuce @>
+
+    [<Fact>]
+    let ``should return Fifteen Fourty when Player1 win and previous score Love Fourty``() =
+       test <@ play (Fourty(Player2,Love)) Player1 = Fourty(Player2,Fifteen) @>
