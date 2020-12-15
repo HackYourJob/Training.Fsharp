@@ -85,6 +85,14 @@ module Api =
     open FSharp.Control.Tasks.V2.ContextInsensitive
     open Microsoft.AspNetCore.Http
 
+    let values = seq {
+        yield 5
+        yield! [2; 3]
+    }
+
+    let toto value x =
+        value x
+
     let getScore (getInfra: HttpContext -> DataAccess.GamesStore.Infra) id next (ctx: HttpContext) =
         task {
             let gameStore = getInfra ctx
