@@ -85,8 +85,13 @@ module Domain =
 open Domain
 
 type PersonContact = {
-    Name: Name
+    Name: string
+    Phone: string
 }
+
+let contact1 = { Name = "Joe"; Phone = "987" }
+let contact2 = { contact1 with Name = "Joe2" }
+
 //{ Name = Name "joe" }
 match Name.create "joe" with
 | Ok name ->
@@ -129,3 +134,29 @@ addPrint 5
 [1; 2]
 //|> List.map (fun x -> add1 x |> print)
 |> List.map ((+) 5)
+
+let rec printList list =
+    match list with
+    | [] -> ()
+    | head::tail ->
+        printfn "%i" head
+        printList tail
+
+let multList list =
+    let rec multiList' previousResult list =
+        match list with
+        | [] -> previousResult
+        | head::tail ->
+            let newValue = head * 2
+            let newResult = newValue::previousResult
+            multiList' newResult tail
+
+    multiList' [] list
+    |> List.rev
+
+printList [1..10]
+multList [10..15]
+
+[10..15]
+|> List.map ((*) 2)
+|> List.sum

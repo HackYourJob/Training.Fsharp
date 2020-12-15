@@ -6,11 +6,11 @@ open FSharp.Data
 
 type People = JsonProvider<"""
   [ { "name":"John", "age":94 },
-    { "name":"Tomas" } ] """, SampleIsList=true>
+    { "name":"Tomas", "toto": "fdsf" } ] """, SampleIsList=true>
 
 let person = People.Parse("""{ "name":"Gustavo" }""")
 
-let age = person.Age
+let age = person.Toto
 
 // ====== Operator ======
 
