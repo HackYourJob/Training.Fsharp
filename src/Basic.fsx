@@ -13,6 +13,8 @@ c <- "good"
 
 // function
 let add1 x = x + 1
+// val add1 : x:int -> int
+// val add1 : x:int * y:'a -> int
 let add2 (x: int) : int =
     let y = add1 x
     add1 y
