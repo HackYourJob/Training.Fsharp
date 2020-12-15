@@ -76,6 +76,22 @@ module DataAccess =
                 GetScore = getScore games
             }
 
+module App =
+    open Domain
+    type GameError =
+        | GameNotExist
+
+    let play (gameStore:DataAccess.GamesStore.Infra) gameId player =
+       async {
+            let! score = gameStore.GetScore gameId
+            match score with
+                | None -> return Result.Error GameNotExist
+                | Some score ->
+                    let newScore = scoreAPoint player score
+                    do! gameStore.Store gameId newScore
+                    return Result.Ok ()
+       }
+
 module Api =
     open Microsoft.AspNetCore.Builder
     open Microsoft.AspNetCore.Hosting
@@ -108,6 +124,19 @@ module Api =
 
             return! result next ctx
         }
+    let play (getInfra: HttpContext -> DataAccess.GamesStore.Infra) id next (ctx: HttpContext) =
+        task {
+            let gameStore = getInfra ctx
+
+            let! result = App.play gameStore id Domain.Player1
+
+            let result =
+                match result with
+                | Error App.GameNotExist-> RequestErrors.notFound (text "game not exists")
+                | Ok () -> Successful.ok (text "")            
+                        
+            return! result next ctx
+        }
 
     let webApp getInfra =
         choose [
@@ -116,6 +145,7 @@ module Api =
                 route "/"       >=> text "Hello"
             ]
             POST >=> choose [
+                routef "/games/%s/player1" (fun id -> play getInfra id)
             ]
         ]
 
